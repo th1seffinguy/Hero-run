@@ -5,10 +5,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>HERO RUN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  html,body{background:#000;width:100%;height:100dvh;overflow:hidden;font-family:'Space Mono',monospace;touch-action:none;user-select:none;-webkit-user-select:none;}
+  /* Fonts loaded via <link> in <head> */
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{background:#000;width:100%;height:100dvh;overflow:hidden;font-family:‘Space Mono’,monospace;touch-action:none;user-select:none;-webkit-user-select:none;}
 
 #orientationMsg{
 display:none;position:fixed;inset:0;z-index:9999;background:#0a0010;
@@ -903,6 +907,16 @@ document.addEventListener('keyup',e=>{if(e.code==='Space'||e.code==='ArrowUp')ho
 
 document.getElementById('startBtn').addEventListener('click',beginGame);
 document.getElementById('retryBtn').addEventListener('click',beginGame);
+
+// Belt-and-suspenders orientation enforcement for iOS Safari
+function checkOrientation(){
+  const portrait=window.innerHeight>window.innerWidth;
+  document.getElementById('orientationMsg').style.display=portrait?'flex':'none';
+  document.getElementById('gameWrapper').style.display=portrait?'none':'block';
+}
+window.addEventListener('resize',checkOrientation);
+window.addEventListener('orientationchange',()=>setTimeout(checkOrientation,150));
+checkOrientation();
 
 requestAnimationFrame(loop);
 </script>
