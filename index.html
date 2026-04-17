@@ -333,9 +333,9 @@ function coinCoolHeat(){
   speedBonus=Math.max(0.0, speedBonus-0.22);  // meaningful speed cut
   updateHeatUI();
 }
-// Stop sign: hard brakes speed, resets heat significantly
+// Stop sign: reset to base speed (speedBonus=0) and reset heat significantly
 function stopSignEffect(){
-  speedBonus=Math.max(0.0, speedBonus-0.50);  // half the speed bonus gone
+  speedBonus=0.0;  // always reset to base speed, not just a partial reduction
   HEAT.value=Math.max(0.0, HEAT.value-0.60);
   updateHeatUI();
 }
